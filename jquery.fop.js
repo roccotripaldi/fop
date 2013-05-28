@@ -8,7 +8,7 @@
  */
 ;(function($){
 	var fop_timer, animation_timer;
-	
+	var instances = 0;
 	var fop_config = {
 		box_styles : {
 			"position" : "fixed",
@@ -47,6 +47,7 @@
 			4 : new Array(),
 		},
 		num_sectors : 4,
+		sector_padding : 100,
 		max_density : 42,
 		max_duration : 5000,
 	}
@@ -81,7 +82,6 @@
 			if(settings["duration"] > fop_config["max_duration"]) {
 				settings["duration"] = fop_config["max_duration"];
 			}
-			console.log(settings);
 			 $( this ).click(function(e) {
 				$( "body" ).append( fop_config["box_html"] );
 				$( "#" + fop_config["box_id"] ).css( fop_config["box_styles"] );
@@ -195,10 +195,15 @@
 			fop_config["origin_x"] = fop_config["mouse_x"] - fop_config["x_offset"];
 			fop_config["origin_y"] = fop_config["mouse_y"] - fop_config["y_offset"];
 			// sectors are [minX, maxX, minY, maxY]
-			fop_config['sector'][1] = [-100, window_width / 2, -100, window_height / 2];
-			fop_config['sector'][2] = [window_width / 2, window_width+100, -100, window_height / 2];
-			fop_config['sector'][3] = [-100, window_width / 2, window_height / 2, window_height];
-			fop_config['sector'][4] = [window_width / 2, window_width + 100, window_height / 2, window_height];
+			var top = 0 - fop_config["sector_padding"];
+			var center = window_width / 2;
+			var right = window_width + fop_config["sector_padding"];
+			var middle = window_height / 2;
+			var bottom = window_height + fop_config["sector_padding"];
+			fop_config['sector'][1] = [top, center, top, middle];
+			fop_config['sector'][2] = [center, right, top, middle];
+			fop_config['sector'][3] = [top, center, middle, bottom];
+			fop_config['sector'][4] = [center, right, middle, bottom];
 			fop_timer = setTimeout(function(){ methods.destroy(); }, settings["duration"]);
 			animation_timer = setInterval( function(){ methods.fly(); }, fop_config["animation_interval"] );
 			console.log(fop_config);
@@ -215,7 +220,7 @@
 		
 		populate_sectors : function(dir, settings) {
 
-			for( var i = 1; i < fop_config['num_sectors']; i++) {
+			for( var i = 1; i <= fop_config['num_sectors']; i++) {
 				var ratio = Math.floor(Math.random()*5) + 1;
 				var options = {
 				 	ratio : ratio,
@@ -235,7 +240,7 @@
 		},
 		
 		animations : {
-			left_2d : function(settings) {
+			left : function(settings) {
 				// populate each sector based on phrase density
 				// give direction 3, or east
 				for(var a = 0; a < settings['density']; a++) {
@@ -243,7 +248,7 @@
 				}
 			},
 			
-			right_2d : function(settings) {
+			right : function(settings) {
 				// populate each sector based on phrase density
 				// give direction 7, or west
 				for(var a = 0; a < settings['density']; a++) {
@@ -251,7 +256,7 @@
 				}
 			}, 
 
-			random_2d : function(settings) {
+			random : function(settings) {
 				// populate each sector based on phrase density
 				// give direction 9, or random
 				for(var a = 0; a < settings['density']; a++) {
@@ -259,7 +264,7 @@
 				}
 			}, 
 			
-			top_2d : function(settings) {
+			rise : function(settings) {
 				// populate each sector based on phrase density
 				// give direction 9, or random
 				for(var a = 0; a < settings['density']; a++) {
@@ -267,7 +272,7 @@
 				}
 			}, 
 			
-			bottom_2d : function(settings) {
+			rain : function(settings) {
 				// populate each sector based on phrase density
 				// give direction 9, or random
 				for(var a = 0; a < settings['density']; a++) {

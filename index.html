@@ -4,11 +4,16 @@
 	<meta charset="utf-8" />
 	<title>Flight Testing</title>
 	<style>
+	a { color: blue; font-weight: bold;}
 	.rain {
 		font-size: 24px;
 		color: #336600;
 		font-weight: bold;
 		text-shadow: 5px 5px 5px #555;
+	}
+	.rise {
+		font-size: 24px;
+		color: orange;
 	}
 	.boom {
 		font-size: 50px;
@@ -25,9 +30,10 @@
 	<script src="jquery.fop.js"></script>
 	<script>
 	$(document).ready(function(){
-		$('#rain').Fop({'phrase_class': 'rain', 'animation_type' : 'bottom_2d', 'phrase' : '$', 'density' : 42, 'duration' : 2000});
+		$('#rain').Fop({'phrase_class': 'rain', 'animation_type' : 'rain', 'phrase' : '$', 'density' : 20, 'duration' : 2000});
 		$('#boom').Fop({'phrase_class': 'boom', 'animation_type' : 'center_burst', 'phrase' : 'BOOM!'});
 		$('#like').Fop({'phrase_class': 'like', 'animation_type' : 'origin_burst', 'phrase' : '&hearts;'});
+		$('#rise').Fop({'phrase_class': 'rise', 'animation_type' : 'rise', 'phrase' : '&bull;', 'density': 42, 'duration' : 2000});
 	});
 	</script>
 </head>
@@ -36,5 +42,6 @@
 	<p>Yeah, buddy! <a id="rain">MAKE IT RAIN</a></p>
 	<p>Or make it <a id="boom">BOOM</a></p>
 	<p>Do you <a id="like">Like It</a>?</p>
+	<p>Let's <a id="rise">pop a bottle</a>.</p>
 </body>
 </html>
