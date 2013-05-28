@@ -47,18 +47,21 @@
 			4 : new Array(),
 		},
 		num_sectors : 4,
+		max_density : 42,
+		max_duration : 5000,
+	}
+
+	var defaults = {
+		phrase :  'Flight Of Phrase',
+		animation_type : "origin_burst",
+		phrase_class : "",
+		duration : 1000,
+		density : 9,
 	}
 	
 	var methods = {
 		init : function (options) {
 			 $(this).css("cursor", "pointer");
-			var defaults = {
-				phrase :  'Flight Of Phrase',
-				animation_type : "origin_burst",
-				phrase_class : "",
-				duration : 1000,
-				density : 9,
-			}
 			var settings = $.extend({}, defaults, options);
 			
 			if( !methods.animations[ settings["animation_type"] ]) {
@@ -66,17 +69,17 @@
 			}
 			settings["density"] = parseInt(settings["density"]);
 			if(isNaN(settings["density"])) {
-				settings["density"] = 9;
+				settings["density"] = defaults["density"];
 			}
-			if(settings["density"] > 42) {
-				settings["density"] = 42;
+			if(settings["density"] > fop_config["max_density"]) {
+				settings["density"] = fop_config["max_density"];
 			}
 			settings["duration"] = parseInt( settings["duration"]);
 			if(isNaN(settings["duration"])) {
-				settings["duration"] = 1000;
+				settings["duration"] = defaults["duration"];
 			}
-			if(settings["duration"] > 5000) {
-				settings["duration"] = 5000;
+			if(settings["duration"] > fop_config["max_duration"]) {
+				settings["duration"] = fop_config["max_duration"];
 			}
 			console.log(settings);
 			 $( this ).click(function(e) {
@@ -191,10 +194,11 @@
 			fop_config["y_offset"] = (window_height / 2) - fop_config["center_y"];
 			fop_config["origin_x"] = fop_config["mouse_x"] - fop_config["x_offset"];
 			fop_config["origin_y"] = fop_config["mouse_y"] - fop_config["y_offset"];
-			fop_config['sector'][1] = [0, window_width / 2, 0, window_height / 2];
-			fop_config['sector'][2] = [window_width / 2, window_width, 0, window_height / 2];
-			fop_config['sector'][3] = [0, window_width / 2, window_height / 2, window_height];
-			fop_config['sector'][4] = [window_width / 2, window_width, window_height / 2, window_height];
+			// sectors are [minX, maxX, minY, maxY]
+			fop_config['sector'][1] = [-100, window_width / 2, -100, window_height / 2];
+			fop_config['sector'][2] = [window_width / 2, window_width+100, -100, window_height / 2];
+			fop_config['sector'][3] = [-100, window_width / 2, window_height / 2, window_height];
+			fop_config['sector'][4] = [window_width / 2, window_width + 100, window_height / 2, window_height];
 			fop_timer = setTimeout(function(){ methods.destroy(); }, settings["duration"]);
 			animation_timer = setInterval( function(){ methods.fly(); }, fop_config["animation_interval"] );
 			console.log(fop_config);
