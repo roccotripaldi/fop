@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Flight Testing</title>
+	<style>
+	.rain {
+		font-size: 24px;
+		color: #336600;
+		font-weight: bold;
+		text-shadow: 5px 5px 5px #555;
+	}
+	.boom {
+		font-size: 50px;
+		color: #900;
+		font-weight: bold;
+	}
+	.like {
+		font-size: 60px;
+		text-shadow: 5px 5px 10px #333;
+		color: #E01B6A;
+	}
+	</style>
+	<script src="jquery-1.9.1.js"></script>
+	<script src="jquery.fop.js"></script>
+	<script>
+	$(document).ready(function(){
+		$('#rain').Fop({'phrase_class': 'rain', 'animation_type' : 'bottom_2d', 'phrase' : '$', 'density' : 42, 'duration' : 2000});
+		$('#boom').Fop({'phrase_class': 'boom', 'animation_type' : 'center_burst', 'phrase' : 'BOOM!'});
+		$('#like').Fop({'phrase_class': 'like', 'animation_type' : 'origin_burst', 'phrase' : '&hearts;'});
+	});
+	</script>
+</head>
+<body>
+	<h1>Flight Testing</h1>
+	<p>Yeah, buddy! <a id="rain">MAKE IT RAIN</a></p>
+	<p>Or make it <a id="boom">BOOM</a></p>
+	<p>Do you <a id="like">Like It</a>?</p>
+</body>
+</html>
