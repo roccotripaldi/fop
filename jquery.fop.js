@@ -7,7 +7,11 @@
  *
  */
 ;(function($){
-	var fop_timer, animation_timer;
+	var fop_timer, animation_timer, pageX, pageY;
+    $(document).mousemove(function(e){
+		pageX = e.pageX;
+		pageY = e.pageY;
+     }); 
 	var instances = 0;
 	var fop_config = {
 		box_styles : {
@@ -58,36 +62,53 @@
 		phrase_class : "",
 		duration : 1000,
 		density : 9,
+		click_to_start : true,
 	}
+	
+	var oa = new Array();
 	
 	var methods = {
 		init : function (options) {
-			 $(this).css("cursor", "pointer");
-			var settings = $.extend({}, defaults, options);
-			
-			if( !methods.animations[ settings["animation_type"] ]) {
-				settings["animation_type"] = defaults["animation_type"];
+			instances++;
+			$(this).data("instance_id", instances);
+			oa[instances] = $.extend({}, defaults, options);
+			methods.sanitize_options( instances );
+			if(oa[instances]['click_to_start']) {
+				$(this).click(function(e) {
+					 $(this).Fop('start');
+				});
 			}
-			settings["density"] = parseInt(settings["density"]);
-			if(isNaN(settings["density"])) {
-				settings["density"] = defaults["density"];
+		},
+		
+		sanitize_options : function(instance_id) {
+			if( !methods.animations[ oa[instance_id]["animation_type"] ]) {
+				oa[instance_id]["animation_type"] = defaults["animation_type"];
 			}
-			if(settings["density"] > fop_config["max_density"]) {
-				settings["density"] = fop_config["max_density"];
+			oa[instance_id]["density"] = parseInt(oa[instance_id]["density"]);
+			if(isNaN(oa[instance_id]["density"])) {
+				oa[instance_id]["density"] = defaults["density"];
 			}
-			settings["duration"] = parseInt( settings["duration"]);
-			if(isNaN(settings["duration"])) {
-				settings["duration"] = defaults["duration"];
+			if(oa[instance_id]["density"] > fop_config["max_density"]) {
+				oa[instance_id]["density"] = fop_config["max_density"];
 			}
-			if(settings["duration"] > fop_config["max_duration"]) {
-				settings["duration"] = fop_config["max_duration"];
+			oa[instance_id]["duration"] = parseInt( oa[instance_id]["duration"]);
+			if(isNaN(oa[instance_id]["duration"])) {
+				oa[instance_id]["duration"] = defaults["duration"];
 			}
-			 $( this ).click(function(e) {
-				$( "body" ).append( fop_config["box_html"] );
-				$( "#" + fop_config["box_id"] ).css( fop_config["box_styles"] );
-				methods.calibrate(e, settings);
-				methods.animations[ settings["animation_type"] ](settings);
-			});
+			if(oa[instance_id]["duration"] > fop_config["max_duration"]) {
+				oa[instance_id]["duration"] = fop_config["max_duration"];
+			}
+			if( typeof(oa[instance_id]["click_to_start"]) != "boolean" ) {
+				oa[instance_id]["click_to_start"] = true;
+			}
+		},
+		
+		start : function() {
+			var instance_id = $(this).data("instance_id");
+			$( "body" ).append( fop_config["box_html"] );
+			$( "#" + fop_config["box_id"] ).css( fop_config["box_styles"] );
+			methods.calibrate(oa[instance_id]);
+			methods.animations[ oa[instance_id]["animation_type"] ](oa[instance_id]);
 		},
 		
 		configure_phrase : function( options ) {
@@ -169,9 +190,9 @@
 			});
 		},
 		
-		calibrate : function(mouse_event, settings) {
-			fop_config["mouse_x"] = mouse_event.pageX;
-			fop_config["mouse_y"] = mouse_event.pageY;
+		calibrate : function(settings) {
+			fop_config["mouse_x"] = pageX;
+			fop_config["mouse_y"] = pageY;
 			var options = {
 				phrase_id : "test",
 				default_styles : fop_config["test_phrase_styles"],
@@ -206,7 +227,6 @@
 			fop_config['sector'][4] = [center, right, middle, bottom];
 			fop_timer = setTimeout(function(){ methods.destroy(); }, settings["duration"]);
 			animation_timer = setInterval( function(){ methods.fly(); }, fop_config["animation_interval"] );
-			console.log(fop_config);
 		},
 		
 		destroy : function() {
