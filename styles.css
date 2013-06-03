@@ -19,9 +19,27 @@ ul, ol { list-style: none; }
 
 }
 
+/*LAYOUT*/
+body {
+background: #C1FAC4; /* mint */
+}
+
+#top {
+	text-align: center;
+	height: 176px;
+}
+
+/* COMMON LAYOUT CLASSES */
+.left { float: left; }
+.right { float: right; }
+.clear { clear: both; height:0px; }
+.wrapper { width: 960px; margin: 0 auto 0 auto; }
+
 /*TYPOGRAPHY*/
 
 h1,h2,h3,h4,h5 {
 	font-family: 'KellySlabRegular';
 	font-weight: normal;
 }
+
+ul li a { outline: none !important; }
