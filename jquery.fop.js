@@ -9,8 +9,8 @@
 ;(function($){
 	var fop_timer, animation_timer, pageX, pageY;
     $(document).mousemove(function(e){
-		pageX = e.pageX;
-		pageY = e.pageY;
+		pageX = e.clientX;
+		pageY = e.clientY;
      }); 
 	var instances = 0;
 	var fop_config = {
@@ -52,17 +52,20 @@
 		},
 		num_sectors : 4,
 		sector_padding : 100,
-		max_density : 42,
+		max_density : 40,
+		min_density : 4,
 		max_duration : 5000,
+		min_duration : 1000,
 	}
 
 	var defaults = {
-		phrase :  'Flight Of Phrase',
+		phrase :  'FlightOfPhrase',
 		animation_type : "origin_burst",
 		phrase_class : "",
 		duration : 1000,
 		density : 9,
 		click_to_start : true,
+		fop_complete: function(){},
 	}
 	
 	var oa = new Array();
@@ -71,13 +74,18 @@
 		init : function (options) {
 			instances++;
 			$(this).data("instance_id", instances);
+			$(this).addClass("fop" + instances);
 			oa[instances] = $.extend({}, defaults, options);
 			methods.sanitize_options( instances );
 			if(oa[instances]['click_to_start']) {
 				$(this).click(function(e) {
-					 $(this).Fop('start');
+					 $(this).Fop("start");
 				});
 			}
+			$(this).on("fop_complete", function(){ 
+				var id = $(this).data("instance_id");
+				oa[id]["fop_complete"]();
+			});
 		},
 		
 		sanitize_options : function(instance_id) {
@@ -88,18 +96,21 @@
 			if(isNaN(oa[instance_id]["density"])) {
 				oa[instance_id]["density"] = defaults["density"];
 			}
-			if(oa[instance_id]["density"] > fop_config["max_density"]) {
-				oa[instance_id]["density"] = fop_config["max_density"];
+			if(oa[instance_id]["density"] > fop_config["max_density"] || oa[instance_id]["density"] < fop_config["min_density"]) {
+				oa[instance_id]["density"] = fop_config["min_density"];
 			}
 			oa[instance_id]["duration"] = parseInt( oa[instance_id]["duration"]);
 			if(isNaN(oa[instance_id]["duration"])) {
 				oa[instance_id]["duration"] = defaults["duration"];
 			}
-			if(oa[instance_id]["duration"] > fop_config["max_duration"]) {
-				oa[instance_id]["duration"] = fop_config["max_duration"];
+			if(oa[instance_id]["duration"] > fop_config["max_duration"] || oa[instance_id]["duration"] < fop_config["min_duration"]) {
+				oa[instance_id]["duration"] = fop_config["min_duration"];
 			}
 			if( typeof(oa[instance_id]["click_to_start"]) != "boolean" ) {
 				oa[instance_id]["click_to_start"] = true;
+			}
+			if( typeof(oa[instance_id]["fop_complete"]) != "function" ) {
+				oa[instance_id]["fop_complete"] = defaults["fop_complete"];
 			}
 		},
 		
@@ -107,7 +118,7 @@
 			var instance_id = $(this).data("instance_id");
 			$( "body" ).append( fop_config["box_html"] );
 			$( "#" + fop_config["box_id"] ).css( fop_config["box_styles"] );
-			methods.calibrate(oa[instance_id]);
+			methods.calibrate(oa[instance_id], instance_id);
 			methods.animations[ oa[instance_id]["animation_type"] ](oa[instance_id]);
 		},
 		
@@ -190,7 +201,7 @@
 			});
 		},
 		
-		calibrate : function(settings) {
+		calibrate : function(settings, instance_id) {
 			fop_config["mouse_x"] = pageX;
 			fop_config["mouse_y"] = pageY;
 			var options = {
@@ -225,16 +236,17 @@
 			fop_config['sector'][2] = [center, right, top, middle];
 			fop_config['sector'][3] = [top, center, middle, bottom];
 			fop_config['sector'][4] = [center, right, middle, bottom];
-			fop_timer = setTimeout(function(){ methods.destroy(); }, settings["duration"]);
+			fop_timer = setTimeout(function(){ methods.destroy(instance_id); }, settings["duration"]);
 			animation_timer = setInterval( function(){ methods.fly(); }, fop_config["animation_interval"] );
 		},
 		
-		destroy : function() {
+		destroy : function(instance_id) {
 			$("#" + fop_config["box_id"]).fadeOut(
 				300, 
 				function() { 
 					clearInterval(animation_timer);
-					$("#" + fop_config["box_id"]).detach(); 
+					$("#" + fop_config["box_id"]).detach();
+					$(".fop" + instance_id).trigger('fop_complete');
 			});
 		},
 		
@@ -276,7 +288,7 @@
 				}
 			}, 
 
-			random : function(settings) {
+			chaos : function(settings) {
 				// populate each sector based on phrase density
 				// give direction 9, or random
 				for(var a = 0; a < settings['density']; a++) {
@@ -345,7 +357,7 @@
 	    } else if ( typeof method === 'object' || ! method ) {
 	      return methods.init.apply( $(this), arguments );
 	    } else {
-	      $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );
+	      $.error( 'Method ' +  method + ' does not exist.' );
 	    } 
 	}
 })(jQuery);
