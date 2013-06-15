@@ -6,7 +6,7 @@
 	<script src="jquery-1.9.1.js"></script>
     <script src="jquery-ui-1.10.3.custom.min.js"></script>
     <script src="jquery.snippet.js"></script>
-    <script src="jquery.fop.js"></script>
+    <script src="jquery.fop-1.0.0.js"></script>
 	<script>
 	$(document).ready(function(){
 		//$('#rain').Fop({'phrase_class': 'rain', 'animation_type' : 'rain', 'phrase' : '$', 'density' : 20, 'duration' : 2000});
