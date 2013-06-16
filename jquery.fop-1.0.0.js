@@ -1,9 +1,9 @@
 /*
  * FlightOfPhrase
  * Copyright (c) 2013 Rocco Tripaldi < http://www.roccotripaldi.com >
- * Licensed under the GPL < http://www.opensource.org/licenses/gpl-license.php > license.
+ * Licensed under the GPL < http://opensource.org/licenses/GPL-3.0 > license.
  * 
- * Version 0.1.2
+ * Version 1.0.0
  *
  */
 ;(function($){

@@ -1,0 +1,29 @@
+{
+    "name": "fop",
+    "title": "Flight of Phrase",
+    "description": "A typanamation plugin that sends words flying accross your website.",
+    "keywords": [
+        "jquery",
+        "animation",
+		"typography"
+    ],
+    "version": "1.0.0",
+    "author": {
+        "name": "Rocco Tripaldi",
+        "url": "http://roccotripalid.com/"
+    },
+    "licenses": [
+        {
+            "type": "GPLv3",
+            "url": "http://opensource.org/licenses/GPL-3.0"
+        }
+    ],
+    "bugs": "https://github.com/roccotripaldi/fop/issues",
+    "homepage": "http:/flightofphrase.roccotripaldi.com/",
+    "docs": "http:/flightofphrase.roccotripaldi.com/#wiki",
+    "download": "http:/flightofphrase.roccotripaldi.com/#download",
+	"demo": "http:/flightofphrase.roccotripaldi.com/#examples",
+    "dependencies": {
+        "jquery": ">=1.5"
+    }
+}

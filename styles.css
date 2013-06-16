@@ -149,8 +149,6 @@ ul li a { outline: none !important; }
 /* TABLES */
 #fop_table {
 	width: 100%;
-	border-right: 1px solid;
-	border-top: 1px solid;
 	border-collapse: collapse;
 }
 
@@ -170,11 +168,11 @@ ul li a { outline: none !important; }
 
 #fop_table tr.section_marker th {
 	border-left: 1px solid #172e24 !important;
+	border-right: 1px solid #172e24 !important;
 }
 
 #fop_table td {
-	border-bottom: 1px solid;
-	border-left: 1px solid;
+	border: 1px solid;
 }
 
 #fop_table th {
@@ -182,8 +180,8 @@ ul li a { outline: none !important; }
 }
 
 #fop_table tr.sub_section_marker th {
-
-	border-color: #C1E09A !important;
+	border-left: 1px solid #C1E09A;
+	border-right: 1px solid #C1E09A;
 }
 
 /*---------- acid Styles ---------*/

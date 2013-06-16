@@ -6,11 +6,11 @@
 	<script src="jquery-1.9.1.js"></script>
     <script src="jquery-ui-1.10.3.custom.min.js"></script>
     <script src="jquery.snippet.js"></script>
-    <script src="jquery.fop-1.0.0.js"></script>
+    <script src="jquery.fop-1.0.0.min.js"></script>
 	<script>
 	$(document).ready(function(){
 		//$('#rain').Fop({'phrase_class': 'rain', 'animation_type' : 'rain', 'phrase' : '$', 'density' : 20, 'duration' : 2000});
-		$("#fop").Fop({ 'phrase_class' : 'fop_phrase' });
+		$("#fop").Fop({ 'phrase_class' : 'fop_phrase', 'phrase' : 'Flight&nbsp;of&nbsp;Phrase' });
 		$("#content").tabs();
 		$(".target_tab").click(function(){
 			var tab = $(this).data("tab");
@@ -20,7 +20,7 @@
 		$("#flying").Fop({
 			"phrase_class" : "flying",
 			"animation_type" : "chaos",
-			"phrase" : "Mega Awesome!",
+			"phrase" : "Mega&nbsp;Awesome!",
 			"density" : 10,
 			"duration" : 2000
 		});
@@ -59,6 +59,20 @@
 	</script>
     <link href="css/custom-theme/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" media="all" />
     <link href="styles.css" rel="stylesheet" media="all" />
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-36068463-1']);
+	  _gaq.push(['_setDomainName', 'roccotripaldi.com']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
 </head>
 <body>
 
@@ -79,7 +93,7 @@
     
     	<div class="main_text left">
         <p>Flight of Phrase is a <a href="http://jquery.com" target="_blank">jQuery</a> plugin authored by Rocco Tripaldi. It sends a character, word, or phrase flying across your website.</p> 
-        <p>Flight of Phrase is free to use, modify, or distribute under the <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT license</a>. But if you've enjoyed using it, please feel free to buy Rocco something from his <a href="http://www.amazon.com/registry/wishlist/1KP6FT22Z5QGL/ref=cm_sw_r_tw_ws_UP-Rrb1CZCPVG" target="_blank">Amazon wish list</a>.</p>
+        <p>Flight of Phrase is free to use, modify, or distribute under the <a href="http://opensource.org/licenses/GPL-3.0" target="_blank">GNU General Public License</a>. But if you've enjoyed using it, please feel free to buy Rocco something from his <a href="http://www.amazon.com/registry/wishlist/1KP6FT22Z5QGL/ref=cm_sw_r_tw_ws_UP-Rrb1CZCPVG" target="_blank">Amazon wish list</a>.</p>
         <p>You should find all you need to use this plugin right here, but if you have any questions or issues, please <a href="https://github.com/roccotripaldi/fop/issues" target="_blank">post them on GitHub</a>.</p>
         </div>
         
@@ -115,7 +129,7 @@
 	$("#flying").Fop({
 		"phrase_class" : "flying",
 		"animation_type" : "chaos",
-		"phrase" : "Mega Awesome!",
+		"phrase" : "Mega&nbsp;Awesome!",
 		"duration" : 2000,
 		"density" : 4
 	});
@@ -254,7 +268,7 @@
 					<th colspan="2">Usage</th>
 				</tr>
 				<tr>
-					<td>start</td>
+					<td><code>start</code></td>
 					<td colspan="2">This method triggers the flight after initialization. It accepts no arguments.<br /><code>$("my_element").Fop("start");</code></td>
 				</tr>
 				
@@ -266,7 +280,7 @@
 					<th colspan="2">Usage</th>
 				</tr>
 				<tr>
-					<td>fop_complete</td>
+					<td><code>fop_complete</code></td>
 					<td colspan="2">Define on initialization:<br /><code>$("my_element").Fop("phrase" : "my phrase", "fop_complete" : function() { alert ("done"); })</code><br /><br />
 						Or define after initialization:<br /><code>$("my_element").on("fop_complete", function(){ alert("done"); })</code></td>
 				</tr>
@@ -276,7 +290,22 @@
 
 	
 	
-	 <div id="download">Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</div>
+	 <div id="download">
+		 
+		 <div class="main_text left">
+        	 <p>Use the link on the right to download the latest, minified version of Flight of Phrase.</p>
+			 <p>Go to <a href="https://github.com/roccotripaldi/fop" target="_blank">GitHub</a> to post a question, bug, idea, or to fork it.</p>
+			 <p>If you've enjoyed using Flight of Phrase, consider <a href="http://www.amazon.com/registry/wishlist/1KP6FT22Z5QGL/ref=cm_sw_r_tw_ws_UP-Rrb1CZCPVG" target="_blank">buying Rocco a gift</a>.</p>
+        </div>
+        
+        <div class="example right">
+        <div class="example_box">
+        	<p><a href="/download/">Download<br />jquery.fop-1.0.0.min.js</a></p>
+            </div>
+        </div>
+		
+        <div class="clear">&nbsp;</div>
+	</div>
     
     </div>
 	<div id="footer">
