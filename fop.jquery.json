@@ -7,7 +7,7 @@
         "animation",
 		"typography"
     ],
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": {
         "name": "Rocco Tripaldi",
         "url": "http://roccotripaldi.com/"
@@ -19,10 +19,10 @@
         }
     ],
     "bugs": "https://github.com/roccotripaldi/fop/issues",
-    "homepage": "http:/flightofphrase.roccotripaldi.com/",
-    "docs": "http:/flightofphrase.roccotripaldi.com/#wiki",
-    "download": "http:/flightofphrase.roccotripaldi.com/#download",
-	"demo": "http:/flightofphrase.roccotripaldi.com/#examples",
+    "homepage": "http://flightofphrase.roccotripaldi.com/",
+    "docs": "http://flightofphrase.roccotripaldi.com/#wiki",
+    "download": "http://flightofphrase.roccotripaldi.com/#download",
+	"demo": "http://flightofphrase.roccotripaldi.com/#examples",
     "dependencies": {
         "jquery": ">=1.5"
     }
